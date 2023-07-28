@@ -40,3 +40,4 @@ export class EventsController {
   @HttpCode(204)
   remove(@Param('id') id) {}
 }
+l
