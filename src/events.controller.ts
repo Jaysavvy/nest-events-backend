@@ -12,18 +12,17 @@ import {
 @Controller('/events')
 export class EventsController {
   @Get()
-  findAll() : id: number, name: string {}[]{
+  findAll() {
     return [
-        {id: 1, name: 'First event'},
-        {id: 2, name: 'Second event'},
-        {id: 3, name: 'Third event'}
-
+      { id: 1, name: 'First event' },
+      { id: 2, name: 'Second event' },
+      { id: 3, name: 'Third event' },
     ];
   }
 
-  @Get(':id')
-  findOne(@Param() id) : id: number, name: string {}[]{
-    return {id: 1, name: 'First event'};
+  @Get(':id') // /events/1
+  findOne(@Param() id: string) {
+    return { id: 1, name: 'First event' };
   }
 
   @Post()
@@ -38,6 +37,7 @@ export class EventsController {
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id) {}
+  remove(@Param('id') id) {
+    return id;
+  }
 }
-l
