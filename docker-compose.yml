@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  # mysql:
+  #   image: mysql:latest
+  #   platform: linux/arm64v8
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #   ports:
+  #     - 3306:3306
+
+  postgres:
+    image: postgres:latest
+    # platform: linux/arm64v8
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: no
+    ports:
+      - 8080:8080
