@@ -17,4 +17,5 @@
     "editor.guides.bracketPairsHorizontal": false,
     "editor.guides.indentation": false,
     "editor.guides.highlightActiveBracketPair": true,
+    "editor.formatOnSave": true,
   }
