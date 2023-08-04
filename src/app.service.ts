@@ -7,6 +7,7 @@ export class AppService {
   }
 
   getBye(): string {
+    console.log(process.env);
     return 'bye';
   }
 }
