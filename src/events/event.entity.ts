@@ -20,4 +20,7 @@ export class Event {
 
   @OneToMany(() => Attendee, (attendee) => attendee.event)
   attendees: Attendee[];
+
+  // @OneToMany(() => Attendee, (attendee) => attendee.event)
+  // attendees: Attendee[];
 }
