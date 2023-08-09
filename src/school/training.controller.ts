@@ -18,7 +18,9 @@ export class TrainingController {
     // const subject = new Subject();
     // subject.name = 'Math';
 
-    const subject = await this.subjectRepository.findOne(3);
+    const subject = await this.subjectRepository.findOne({
+      where: { id: parseInt(req.params.id, 10) },
+    });
 
     // const teacher1 = new Teacher();
     // teacher1.name = 'John Doe';
