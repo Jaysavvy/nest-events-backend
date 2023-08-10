@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subject } from './subject.entity';
 import { Teacher } from './teacher.entity';
+import { request } from 'http';
 
 @Controller('school')
 export class TrainingController {
@@ -19,7 +20,7 @@ export class TrainingController {
     // subject.name = 'Math';
 
     const subject = await this.subjectRepository.findOne({
-      where: { id: parseInt(req.params.id, 10) },
+      where: { id: parseInt(request.prames.id, 10) },
     });
 
     // const teacher1 = new Teacher();
@@ -51,20 +52,17 @@ export class TrainingController {
 
   @Post('/remove')
   public async removingRelation() {
-    // const subject = await this.subjectRepository.findOne(
-    //   1,
-    //   { relations: ['teachers'] }
-    // );
+    const subject = await this.subjectRepository.findOne({
+      relations: ['teachers'],
+    });
 
-    // subject.teachers = subject.teachers.filter(
-    //   teacher => teacher.id !== 2
-    // );
+    subject.teachers = subject.teachers.filter((teacher) => teacher.id !== 2);
 
-    // await this.subjectRepository.save(subject);
-    await this.subjectRepository
-      .createQueryBuilder('s')
-      .update()
-      .set({ name: 'Confidential' })
-      .execute();
+    await this.subjectRepository.save(subject);
+    // await this.subjectRepository
+    //   .createQueryBuilder('s')
+    //   .update()
+    //   .set({ name: 'Confidential' })
+    //   .execute();
   }
 }

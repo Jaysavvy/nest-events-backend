@@ -16,6 +16,6 @@ export class Subject {
   name: string;
 
   @ManyToMany(() => Teacher, (teacher) => teacher.subjects, { cascade: true })
-  @JoinTable()
+  @JoinTable({})
   teachers: Teacher[];
 }
