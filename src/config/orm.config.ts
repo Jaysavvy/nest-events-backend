@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Attendee } from 'src/events/attendee.entity';
 import { Event } from 'src/events/event.entity';
 import { Teacher } from 'src/school/teacher.entity';
-import { Subject } from 'typeorm/persistence/Subject';
+import { Subject } from 'src/school/subject.entity';
 
 export default registerAs(
   'orm.config',

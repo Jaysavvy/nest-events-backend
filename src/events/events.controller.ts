@@ -68,12 +68,14 @@ export class EventsController {
 
   @Get(':id') // /events/1
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(typeof id);
+    // console.log(typeof id);
     const event = await this.eventsService.getEvent(id);
 
     if (!event) {
       throw new NotFoundException();
     }
+
+    return event;
   }
 
   @Post() // /events
