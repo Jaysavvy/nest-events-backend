@@ -5,6 +5,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { AttendeeAnswerEnum } from './attendee.entity';
 import { ListEvents, WhenEventFilter } from './input/list.events';
 import { paginate, PaginateOpitons } from 'src/pagination/paginator';
+import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 @Injectable()
 export class EventsService {
@@ -107,5 +108,16 @@ export class EventsService {
     this.logger.debug(query.getSql());
 
     return await query.getOne();
+  }
+
+  public async deleteEvent(id: number): Promise<DeleteResult> {
+    return await this.eventsRepository
+      .createQueryBuilder('e')
+      .delete()
+      .where('id = :id', { id })
+      .execute()
+      .then((res) => {
+        return res.raw;
+      });
   }
 }

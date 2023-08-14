@@ -56,17 +56,20 @@ export class TrainingController {
 
   @Post('/remove')
   public async removingRelation() {
-    const subject = await this.subjectRepository.findOne({
-      relations: ['teachers'],
-    });
-
-    subject.teachers = subject.teachers.filter((teacher) => teacher.id !== 2);
-
-    await this.subjectRepository.save(subject);
+    // const subject = await this.subjectRepository.findOne({
+    //   relations: ['teachers'],
+    // });
+    // subject.teachers = subject.teachers.filter((teacher) => teacher.id !== 2);
+    // await this.subjectRepository.save(subject);
     // await this.subjectRepository
     //   .createQueryBuilder('s')
     //   .update()
     //   .set({ name: 'Confidential' })
     //   .execute();
+    await this.subjectRepository
+      .createQueryBuilder('s')
+      .update()
+      .set({ name: 'confidential' })
+      .execute();
   }
 }
