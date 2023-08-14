@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { AttendeeAnswerEnum } from './attendee.entity';
 import { ListEvents, WhenEventFilter } from './input/list.events';
+import { paginate } from 'src/pagination/paginator';
 
 @Injectable()
 export class EventsService {
@@ -52,11 +53,11 @@ export class EventsService {
       );
   }
 
-  public async getEventsWithAttendeeCountFiltered(filter?: ListEvents) {
+  private async getEventsWithAttendeeCountFiltered(filter?: ListEvents) {
     let query = this.getEventsWithAttendeeCountQuery();
 
     if (!filter) {
-      return query.getMany();
+      return query;
     }
 
     if (filter.when) {
@@ -83,7 +84,17 @@ export class EventsService {
       }
     }
 
-    return await query.getMany();
+    return await query;
+  }
+
+  public async getEventsWithAttendeeCountFilteredPaginated(
+    filter: ListEvents,
+    paginateOptions: PaginateOpitons,
+  ) {
+    return await paginate(
+      await this.getEventsWithAttendeeCountFiltered(filter),
+      paginateOptions,
+    );
   }
 
   public async getEvent(id: number): Promise<Event> | undefined {
