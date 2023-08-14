@@ -20,7 +20,7 @@ export class TrainingController {
     // subject.name = 'Math';
 
     const subject = await this.subjectRepository.findOne({
-      where: { id: parseInt('10') },
+      where: { id: parseInt('3') },
     });
 
     // const teacher1 = new Teacher();
@@ -41,10 +41,10 @@ export class TrainingController {
     // Save the user here
 
     const teacher1 = await this.teacherRepository.findOne({
-      where: { id: parseInt('5') },
+      where: { id: parseInt('2') },
     });
     const teacher2 = await this.teacherRepository.findOne({
-      where: { id: parseInt('6') },
+      where: { id: parseInt('3') },
     });
 
     return await this.subjectRepository
