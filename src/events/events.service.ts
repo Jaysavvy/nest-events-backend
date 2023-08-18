@@ -6,6 +6,8 @@ import { AttendeeAnswerEnum } from './attendee.entity';
 import { ListEvents, WhenEventFilter } from './input/list.events';
 import { paginate, PaginateOpitons } from 'src/pagination/paginator';
 import { DeleteResult } from 'typeorm/driver/mongodb/typings';
+import { CreateEventDto } from './input/create-event.dto';
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class EventsService {
@@ -108,6 +110,14 @@ export class EventsService {
     this.logger.debug(query.getSql());
 
     return await query.getOne();
+  }
+
+  public async createEvent(input: CreateEventDto, user: User): Promise<Event> {
+    return await this.eventsRepository.save({
+      ...input,
+      organizer: user,
+      when: new Date(input.when),
+    });
   }
 
   public async deleteEvent(id: number): Promise<DeleteResult> {

@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
+import { Event } from 'src/events/event.entity';
 
 @Entity()
 export class User {
@@ -30,4 +31,7 @@ export class User {
   @OneToOne(() => Profile)
   @JoinColumn()
   profile: Profile;
+
+  @OneToOne(() => Event, (event) => event.organizer)
+  organized: Event[];
 }

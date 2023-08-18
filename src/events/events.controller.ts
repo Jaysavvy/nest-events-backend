@@ -11,6 +11,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,6 +23,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Attendee } from './attendee.entity';
 import { EventsService } from './events.service';
 import { ListEvents } from './input/list.events';
+import { User } from 'src/auth/user.entity';
+import { CurrentUser } from 'src/auth/current-user.decorator';
+import { AuthGuardJwt } from 'src/auth/Input/auth-guard.jwt';
 
 @Controller('/events')
 export class EventsController {
@@ -89,11 +93,9 @@ export class EventsController {
   }
 
   @Post() // /events
-  async create(@Body(ValidationPipe) input: CreateEventDto) {
-    return await this.repository.save({
-      ...input,
-      when: new Date(input.when),
-    });
+  @UseGuards(AuthGuardJwt)
+  async create(@Body() input: CreateEventDto, @CurrentUser() user: User) {
+    return await this.eventsService.createEvent(input, user);
   }
 
   @Patch(':id')
