@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   ForbiddenException,
@@ -12,16 +13,15 @@ import {
   Patch,
   Post,
   Query,
+  SerializeOptions,
   UseGuards,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateEventDto } from './input/create-event.dto';
 import { UpdateEventDto } from './input/update-event.dto';
-import { Event } from './event.entity';
-import { MoreThan, Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Attendee } from './attendee.entity';
+
 import { EventsService } from './events.service';
 import { ListEvents } from './input/list.events';
 import { CurrentUser } from 'src/auth/current-user.decorator';
@@ -31,18 +31,14 @@ import { User } from 'src/auth/user.entity';
 User;
 
 @Controller('/events')
+@SerializeOptions({ strategy: 'excludeAll' })
 export class EventsController {
   private readonly logger = new Logger(EventsController.name);
-  constructor(
-    @InjectRepository(Event)
-    private readonly repository: Repository<Event>,
-    @InjectRepository(Attendee)
-    private readonly attendeeRepository: Repository<Attendee>,
-    private readonly eventsService: EventsService,
-  ) {}
+  constructor(private readonly eventsService: EventsService) {}
 
   @Get()
   @UsePipes(new ValidationPipe({ transform: true }))
+  @UseInterceptors(ClassSerializerInterceptor)
   async findAll(@Query() filter: ListEvents) {
     const events =
       await this.eventsService.getEventsWithAttendeeCountFilteredPaginated(
@@ -56,34 +52,35 @@ export class EventsController {
     return events;
   }
 
-  @Get('/practice')
-  async practice2() {
-    const event = new Event();
-    event.id = 1;
+  // @Get('/practice')
+  // async practice2() {
+  //   const event = new Event();
+  //   event.id = 1;
 
-    const attendee = new Attendee();
+  //   const attendee = new Attendee();
 
-    attendee.name = 'Jerry';
-    attendee.event = event;
+  //   attendee.name = 'Jerry';
+  //   attendee.event = event;
 
-    await this.attendeeRepository.save(attendee);
-    return attendee;
-  }
+  //   await this.attendeeRepository.save(attendee);
+  //   return attendee;
+  // }
 
-  @Get('/practice')
-  async practice() {
-    return await this.repository.find({
-      where: {
-        id: MoreThan(parseInt('2')),
-      },
+  // @Get('/practice')
+  // async practice() {
+  //   return await this.repository.find({
+  //     where: {
+  //       id: MoreThan(parseInt('2')),
+  //     },
 
-      order: {
-        id: 'DESC',
-      },
-    });
-  }
+  //     order: {
+  //       id: 'DESC',
+  //     },
+  //   });
+  // }
 
   @Get(':id') // /events/1
+  @UseInterceptors(ClassSerializerInterceptor)
   async findOne(@Param('id', ParseIntPipe) id: number) {
     // console.log(typeof id);
     const event = await this.eventsService.getEvent(id);
@@ -97,18 +94,20 @@ export class EventsController {
 
   @Post() // /events
   @UseGuards(AuthGuardJwt)
+  @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() input: CreateEventDto, @CurrentUser() User: User) {
     return await this.eventsService.createEvent(input, User);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuardJwt)
+  @UseInterceptors(ClassSerializerInterceptor)
   async update(
     @Param('id') id,
     @Body() input: UpdateEventDto,
     @CurrentUser() User: User,
   ) {
-    const event = await this.repository.findOneOrFail(id);
+    const event = await this.eventsService.getEvent(id);
 
     if (!event) {
       throw new NotFoundException();
@@ -121,7 +120,7 @@ export class EventsController {
       );
     }
 
-    return await this.eventsService.updateEvent(event, input);
+    return await this.eventsService.updateEvent(input, event);
   }
 
   @Delete(':id') // /events/1

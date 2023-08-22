@@ -121,7 +121,10 @@ export class EventsService {
     });
   }
 
-  public async updateEvent(input: UpdateEventDto): Promise<Event> {
+  public async updateEvent(
+    input: UpdateEventDto,
+    event: Event,
+  ): Promise<Event> {
     return await this.eventsRepository.save({
       ...event,
       ...input,

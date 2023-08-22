@@ -10,7 +10,7 @@
     "[typescript]": {
       "editor.formatOnSave": false
     },
-    "workbench.colorTheme": "Carbon Theme",
+    "workbench.colorTheme": "Winter is Coming (Dark Blue)",
     "editor.fontFamily": "Cascadia Code",
     "editor.fontWeight": "400",
     "editor.guides.bracketPairs": "active",
