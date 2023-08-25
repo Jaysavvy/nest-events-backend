@@ -103,7 +103,7 @@ export class EventsController {
   @UseGuards(AuthGuardJwt)
   @UseInterceptors(ClassSerializerInterceptor)
   async update(
-    @Param('id') id,
+    @Param('id', ParseIntPipe) id,
     @Body() input: UpdateEventDto,
     @CurrentUser() User: User,
   ) {
@@ -126,7 +126,7 @@ export class EventsController {
   @Delete(':id') // /events/1
   @UseGuards(AuthGuardJwt)
   @HttpCode(204)
-  async remove(@Param('id') id, @CurrentUser() User: User) {
+  async remove(@Param('id', ParseIntPipe) id, @CurrentUser() User: User) {
     const event = await this.eventsService.getEventWithAttendeeCount(id);
 
     if (!event) {

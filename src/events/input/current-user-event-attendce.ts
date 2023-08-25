@@ -30,7 +30,10 @@ export class CurrentUserEventAttendanceController {
   @Get()
   @UseGuards(AuthGuardJwt)
   @UseInterceptors(ClassSerializerInterceptor)
-  async findAll(@CurrentUser() user: User, @Query('page') page = 1) {
+  async findAll(
+    @CurrentUser() user: User,
+    @Query('page', ParseIntPipe) page = 1,
+  ) {
     return await this.eventsService.getEventsAttendedByUserIdPaginated(
       user.id,
       { limit: 6, currentPage: page },
