@@ -56,6 +56,7 @@ export class CurrentUserEventAttendanceController {
     if (!attendee) {
       throw new NotFoundException();
     }
+
     return attendee;
   }
 

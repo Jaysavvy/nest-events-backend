@@ -12,7 +12,9 @@ export class AttendeesService {
   ) {}
 
   public async findByEventId(eventId: number): Promise<Attendee[]> {
-    return await this.attendeeRepository.findBy({ event: { id: eventId } });
+    return await this.attendeeRepository.find({
+      where: { event: { id: eventId } },
+    });
   }
 
   public async findOneByEventIdAndUserId(

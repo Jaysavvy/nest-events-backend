@@ -26,7 +26,7 @@ export class EventsOrganizedByUserController {
       userId,
       {
         currentPage: page,
-        limit: 10,
+        limit: 5,
       },
     );
   }
