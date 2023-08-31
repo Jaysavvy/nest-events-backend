@@ -24,9 +24,9 @@ import { UpdateEventDto } from './input/update-event.dto';
 
 import { EventsService } from './events.service';
 import { ListEvents } from './input/list.events';
-import { CurrentUser } from 'src/auth/current-user.decorator';
-import { AuthGuardJwt } from 'src/auth/Input/auth-guard.jwt';
-import { User } from 'src/auth/user.entity';
+import { CurrentUser } from './../auth/current-user.decorator';
+import { AuthGuardJwt } from './../auth/Input/auth-guard.jwt';
+import { User } from './../auth/user.entity';
 
 User;
 

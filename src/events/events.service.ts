@@ -7,10 +7,10 @@ import { ListEvents, WhenEventFilter } from './input/list.events';
 import {
   paginate,
   PaginateOpitons as PaginateOptions,
-} from 'src/pagination/paginator';
+} from './../pagination/paginator';
 import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 import { CreateEventDto } from './input/create-event.dto';
-import { User } from 'src/auth/user.entity';
+import { User } from './../auth/user.entity';
 import { UpdateEventDto } from './input/update-event.dto';
 
 @Injectable()

@@ -9,5 +9,15 @@ test(' Event Should be initialized through constructor', () => {
   expect(event).toEqual({
     name: 'Interesting event',
     description: 'That was fun',
+    when: undefined,
+    address: undefined,
+    attendees: undefined,
+    organizer: undefined,
+    organizerId: undefined,
+    event: undefined,
+    attendeeCount: undefined,
+    attendeeRejected: undefined,
+    attendeeMaybe: undefined,
+    attendeeAccepted: undefined,
   });
 });
