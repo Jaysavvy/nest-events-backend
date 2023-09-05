@@ -3,7 +3,7 @@ import { Teacher } from './teacher.entity';
 
 @Resolver(() => Teacher)
 export class TeacherResolver {
-  @Query(() => [Teacher], { name: 'teachers' })
+  @Query(() => [Teacher])
   public async teachers(): Promise<Teacher[]> {
     return [] as Teacher[];
   }
