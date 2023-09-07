@@ -9,10 +9,11 @@ export class Teacher {
   @Field({ nullable: true })
   id: number;
 
-  @Column()
+  @Column({})
   @Field({ nullable: true })
   name: string;
 
   @ManyToMany(() => Subject, (subject) => subject.teachers)
+  @Field(() => [Subject])
   subjects: Subject[];
 }
