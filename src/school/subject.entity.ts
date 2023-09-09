@@ -6,10 +6,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 @Entity()
 @ObjectType()
+@InputType('SubjectInput')
 export class Subject {
   @PrimaryGeneratedColumn()
   @Field()
