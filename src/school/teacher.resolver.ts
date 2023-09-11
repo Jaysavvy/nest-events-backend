@@ -11,9 +11,7 @@ export class TeacherResolver {
   ) {}
   @Query(() => [Teacher])
   public async teachers(): Promise<Teacher[]> {
-    return await this.teachersRepository.find({
-      relations: ['subjects'],
-    });
+    return await this.teachersRepository.find();
   }
 
   @Query(() => Teacher)
@@ -23,7 +21,6 @@ export class TeacherResolver {
   ): Promise<Teacher> {
     return await this.teachersRepository.findOneOrFail({
       where: { id },
-      relations: ['subjects'],
     });
   }
 
