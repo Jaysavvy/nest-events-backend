@@ -1,6 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { TeacherAddInput } from './teacher-add.input';
-import { InputType } from '@nestjs/graphql';
+import { InputType, OmitType, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class TeacherEditInput extends PartialType(TeacherAddInput) {}
+export class TeacherEditInput extends PartialType(
+  OmitType(TeacherAddInput, ['gender']),
+) {}
