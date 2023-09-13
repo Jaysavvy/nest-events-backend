@@ -4,13 +4,14 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { Course } from './course.entity';
 
 @Entity()
 @ObjectType()
-@InputType('SubjectInput')
 export class Subject {
   @PrimaryGeneratedColumn()
   @Field()
@@ -21,6 +22,10 @@ export class Subject {
   name: string;
 
   @ManyToMany(() => Teacher, (teacher) => teacher.subjects, { cascade: true })
-  @JoinTable({})
+  @JoinTable()
   teachers: Promise<Teacher[]>;
+
+  @OneToMany(() => Course, (course) => course.subject)
+  @Field(() => [Course], { nullable: true })
+  courses: Promise<Course[]>;
 }
