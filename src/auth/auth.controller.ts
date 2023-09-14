@@ -10,8 +10,8 @@ import {
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
 import { User } from './user.entity';
-import { AuthGuardLocal } from './Input/auth-guard.local.jwt';
-import { AuthGuardJwt } from './Input/auth-guard.jwt';
+import { AuthGuardLocal } from './auth-guard.local.jwt';
+import { AuthGuardJwt } from './auth-guard.jwt';
 
 @Controller('auth')
 @SerializeOptions({ strategy: 'excludeAll' })

@@ -11,9 +11,10 @@ import { Teacher } from './teacher.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TeacherAddInput } from './input/teacher-add.input';
-import { Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
 import { TeacherEditInput } from './input/teacher-edits.input';
 import { EntityWithId } from './school.types';
+import { AuthGuardJwtGql } from 'src/auth/auth-gaurd-jwt-gql';
 
 @Resolver(() => Teacher)
 export class TeacherResolver {
@@ -39,6 +40,7 @@ export class TeacherResolver {
   }
 
   @Mutation(() => Teacher, { name: 'teacherAdd' })
+  @UseGuards(AuthGuardJwtGql)
   public async add(
     @Args('input', { type: () => TeacherAddInput })
     input: TeacherAddInput,
