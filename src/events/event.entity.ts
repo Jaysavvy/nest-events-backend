@@ -1,15 +1,14 @@
+import { Expose } from 'class-transformer';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User } from './../auth/user.entity';
+import { Paginated } from './../pagination/paginator';
 import { Attendee } from './attendee.entity';
-import { User } from '../auth/user.entity';
-import { Expose } from 'class-transformer';
-import { PaginationResult } from './../pagination/paginator';
 
 @Entity()
 export class Event {
@@ -43,9 +42,8 @@ export class Event {
   @Expose()
   attendees: Attendee[];
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.organized)
   @Expose()
-  @JoinColumn({ name: 'organizerId' })
   organizer: User;
 
   @Column({ nullable: true })
@@ -53,18 +51,12 @@ export class Event {
 
   @Expose()
   attendeeCount?: number;
-
   @Expose()
   attendeeRejected?: number;
-
   @Expose()
-  attenddeMaybe?: number;
-
+  attendeeMaybe?: number;
   @Expose()
   attendeeAccepted?: number;
-
-  // @OneToMany(() => Attendee, (attendee) => attendee.event)
-  // attendees: Attendee[];
 }
 
-export type PaginatedEvents = PaginationResult<Event>;
+export class PaginatedEvents extends Paginated<Event>(Event) {}

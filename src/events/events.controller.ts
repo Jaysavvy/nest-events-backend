@@ -120,7 +120,7 @@ export class EventsController {
       );
     }
 
-    return await this.eventsService.updateEvent(input, event);
+    return await this.eventsService.updateEvent(event, input);
   }
 
   @Delete(':id') // /events/1
