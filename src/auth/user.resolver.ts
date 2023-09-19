@@ -1,16 +1,14 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentUser } from './current-user.decorator';
+import { Query, Resolver } from '@nestjs/graphql';
 import { User } from './user.entity';
-import { Query, UseGuards } from '@nestjs/common';
-import { AuthGuardJwtGql } from './auth-gaurd-jwt-gql';
-import { CreateUserDto } from './Input/create.user.dto';
-import { UserService } from './user.service';
+import { CurrentUser } from './current-user.decorator';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuardJwtGql } from '../auth/auth-gaurd-jwt-gql';
 
 @Resolver(() => User)
 export class UserResolver {
   @Query(() => User, { nullable: true })
   @UseGuards(AuthGuardJwtGql)
-  public async me(@CurrentUser() user: User): Promise<User> {
+  public async me(@CurrentUser() user: User): Promise<User> | null {
     return user;
   }
 }

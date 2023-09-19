@@ -15,6 +15,10 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 @Entity()
 @ObjectType()
 export class User {
+  constructor(partial?: Partial<User>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn()
   @Expose()
   @Field(() => Int)
@@ -45,9 +49,10 @@ export class User {
 
   @OneToOne(() => Profile)
   @JoinColumn()
+  @Expose()
   profile: Profile;
 
-  @OneToOne(() => Event, (event) => event.organizer)
+  @OneToMany(() => Event, (event) => event.organizer)
   @Expose()
   organized: Event[];
 

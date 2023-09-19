@@ -1,6 +1,6 @@
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { ExecutionContext } from '@nestjs/common';
 import { AuthGuardJwt } from './auth-guard.jwt';
+import { ExecutionContext } from '@nestjs/common';
 
 export class AuthGuardJwtGql extends AuthGuardJwt {
   getRequest(context: ExecutionContext) {
