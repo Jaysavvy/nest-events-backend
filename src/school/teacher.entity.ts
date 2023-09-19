@@ -2,13 +2,14 @@ import {
   Column,
   Entity,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { Subject } from './subject.entity';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { Gender } from './school.types';
 import { Course } from './course.entity';
+import { Paginated } from '../pagination/paginator';
 
 @Entity()
 @ObjectType()
@@ -41,3 +42,6 @@ export class Teacher {
   @Field(() => [Course])
   courses: Promise<Course[]>;
 }
+
+@ObjectType()
+export class PaginatedTeachers extends Paginated<Teacher>(Teacher) {}
