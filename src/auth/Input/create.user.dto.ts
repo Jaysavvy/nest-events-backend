@@ -1,4 +1,5 @@
 import { IsEmail, Length } from 'class-validator';
+import { IsRepeated } from 'src/validation/is-repeated.constraint';
 
 export class CreateUserDto {
   @Length(5)
@@ -8,6 +9,9 @@ export class CreateUserDto {
   password: string;
 
   @Length(8)
+  @IsRepeated('password', {
+    message: 'Passwords do not match',
+  })
   retypedPassword: string;
 
   @Length(2)
